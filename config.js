@@ -1,0 +1,1 @@
+export const domainApi = 'http://localhost:1337'
