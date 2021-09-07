@@ -49,51 +49,7 @@ import VueMasonryWall from "vue-masonry-wall"
 export default {
   data() {
     return {
-      page: {
-        id: null,
-        description: null,
-        title: null,
-        published_at: null,
-        created_at: null,
-        updated_at: null,
-        slug: null,
-        preventIndexing: null,
-        keywords: null,
-        header_image: false,
-        headline: null,
-        subheadline: null,
-        headline_cta: null,
-        headline_cta_url: null,
-        gallery_enable: false,
-        gallery_title: null,
-        gallery_subtitle: null,
-        seo: {
-          id: null,
-          metaTitle: null,
-          metaDescription: null,
-          alt: null
-        },
-        header: {
-          id: null,
-          name: null,
-          alternativeText: null,
-          caption: null,
-          width: null,
-          height: null,
-          formats: {},
-          hash: null,
-          ext: null,
-          mime: null,
-          size: null,
-          url: null,
-          previewUrl: null,
-          provider: null,
-          provider_metadata: null,
-          created_at: null,
-          updated_at: null,
-        },
-        gallery: []
-      },
+      page: {},
       options: {
         width: 300,
         padding: {
