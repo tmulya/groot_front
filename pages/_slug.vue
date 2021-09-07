@@ -73,6 +73,15 @@ export default {
         const response = await axios.get(domainApi + '/pages/home-page')
         const data = response.data
         var gallery = []
+        if (data.gallery_enable === true) {
+          for (let i = 0; i < data.gallery.length; i++) {
+            var obj = {
+              url: domainApi + data.gallery[i].url,
+              caption: data.gallery[i].caption
+            }
+            gallery.push(obj)
+          }
+        }
         this.page = {
           id: data.id,
           description: data.description,
@@ -109,12 +118,14 @@ export default {
         const response = await axios.get(domainApi + '/pages' + param)
         const data = response.data
         var gallery = []
-        for (let i = 0; i < data.gallery.length; i++) {
-          var obj = {
-            url: domainApi + data.gallery[i].url,
-            caption: data.gallery[i].caption
+        if (data.gallery_enable === true) {
+          for (let i = 0; i < data.gallery.length; i++) {
+            var obj = {
+              url: domainApi + data.gallery[i].url,
+              caption: data.gallery[i].caption
+            }
+            gallery.push(obj)
           }
-          gallery.push(obj)
         }
         this.page = {
           id: data.id,
