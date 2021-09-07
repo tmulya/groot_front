@@ -149,6 +149,7 @@ export default {
       }
     } else {
       try {
+        console.log(domainApi + '/pages' + param)
         const response = await axios.get(domainApi + '/pages' + param)
         const data = response.data
         var gallery = []
