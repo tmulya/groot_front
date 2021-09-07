@@ -10,6 +10,13 @@
       </div>
     </section>
     <section id="hero2" class="d-flex align-items-center" v-else :style="{ backgroundImage: `url(${page.header})` }">
+      <div class="container">
+        <h1>{{ page.headline }}</h1>
+        <h2>{{ page.subheadline }}</h2>
+        <div class="d-flex" v-if="page.headline_cta">
+          <a :href="page.headline_cta_url" class="btn-get-started scrollto">{{ page.headline_cta }}</a>
+        </div>
+      </div>
     </section>
     <div v-html="page.description"></div>
     <section id="gallery" v-if="page.gallery_enable" class="section-bg-white">

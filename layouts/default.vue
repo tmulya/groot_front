@@ -49,7 +49,7 @@
                     <li><a href="#">Drop Down 4</a></li>
                     </ul>
                 </li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
 
                 </ul>
             </nav><!-- .nav-menu -->
