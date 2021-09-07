@@ -1,6 +1,7 @@
 <template>
   <div>
-    <section id="hero" class="d-flex align-items-center" v-if="page.header_image !== false" :style="{ backgroundImage: `url(${page.header})` }">
+    <!-- <section id="hero" class="d-flex align-items-center" v-if="page.header_image !== false" :style="{ backgroundImage: `url(${page.header})` }"> -->
+    <section id="hero" class="d-flex align-items-center">
       <div class="container">
         <h1>{{ page.headline }}</h1>
         <h2>{{ page.subheadline }}</h2>
@@ -9,7 +10,7 @@
         </div>
       </div>
     </section>
-    <section id="hero2" class="d-flex align-items-center" v-else :style="{ backgroundImage: `url(${page.header})` }">
+    <!-- <section id="hero2" class="d-flex align-items-center" v-else :style="{ backgroundImage: `url(${page.header})` }">
       <div class="container">
         <h1>{{ page.headline }}</h1>
         <h2>{{ page.subheadline }}</h2>
@@ -17,7 +18,7 @@
           <a :href="page.headline_cta_url" class="btn-get-started scrollto">{{ page.headline_cta }}</a>
         </div>
       </div>
-    </section>
+    </section> -->
     <div v-html="page.description"></div>
     <section id="gallery" v-if="page.gallery_enable" class="section-bg-white">
       <div class="container">
