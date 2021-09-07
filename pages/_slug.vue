@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section id="hero" class="d-flex align-items-center" v-if="page.header_image" :style="{ backgroundImage: `url(${page.header})` }">
+    <section id="hero" class="d-flex align-items-center" v-if="page.header_image !== false" :style="{ backgroundImage: `url(${page.header})` }">
       <div class="container">
         <h1>{{ page.headline }}</h1>
         <h2>{{ page.subheadline }}</h2>
@@ -9,21 +9,60 @@
         </div>
       </div>
     </section>
+    <section id="hero2" class="d-flex align-items-center" v-else :style="{ backgroundImage: `url(${page.header})` }">
+    </section>
     <div v-html="page.description"></div>
-    <pre>{{ page }}</pre>
+    <section id="gallery" v-if="page.gallery_enable" class="section-bg-white">
+      <div class="container">
+        <div class="section-title">
+          <h2>{{ page.gallery_title }}</h2>
+          <h3>{{ page.gallery_subtitle }}</h3>
+        </div>
+        <vue-masonry-wall :items="page.gallery" :options="{width: 300, padding: 12}" :ssr="{columns: 2}">
+          <template v-slot:default="{item}">
+            <div class="item-gallery">
+              <img :src="item.url" class="img-gallery"/>
+              <div class="content-gallery">
+                <h5 class="text-ellipsis-1l">{{item.caption}}</h5>
+              </div>
+            </div>
+          </template>
+        </vue-masonry-wall>
+      </div>
+    </section>
+    <!-- <pre>{{ page }}</pre> -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { domainApi } from '@/config'
+import VueMasonryWall from "vue-masonry-wall"
 
 export default {
+  data() {
+    return {
+      options: {
+        width: 300,
+        padding: {
+          2: 8,
+          default: 12
+        },
+      }
+    }
+  },
+  components: { VueMasonryWall },
+  computed: {
+    domain: function () {
+      return domainApi
+    }
+  },
   async asyncData({ params, redirect }) {
     if (typeof params.slug === 'undefined') {
       try {
         const response = await axios.get(domainApi + '/pages/home-page')
         const data = response.data
+        var gallery = []
         const page = {
           id: data.id,
           description: data.description,
@@ -45,7 +84,11 @@ export default {
             metaDescription: data.seo.metaDescription,
             alt: data.alt
           },
-          header: domainApi + data.header.url
+          header: domainApi + data.header.url,
+          gallery_enable: data.gallery_enable,
+          gallery: gallery,
+          gallery_title: data.gallery_title,
+          gallery_subtitle: data.gallery_subtitle
         }
         return { page }
       } catch (error) {
@@ -55,6 +98,14 @@ export default {
       try {
         const response = await axios.get(domainApi + '/pages/' + params.slug)
         const data = response.data
+        var gallery = []
+        for (let i = 0; i < data.gallery.length; i++) {
+          var obj = {
+            url: domainApi + data.gallery[i].url,
+            caption: data.gallery[i].caption
+          }
+          gallery.push(obj)
+        }
         const page = {
           id: data.id,
           description: data.description,
@@ -71,7 +122,11 @@ export default {
           headline_cta: data.headline_cta,
           headline_cta_url: data.headline_cta_url,
           seo: data.seo,
-          header: data.header ? domainApi + data.header.url : null
+          header: data.header ? domainApi + data.header.url : null,
+          gallery_enable: data.gallery_enable,
+          gallery: gallery,
+          gallery_title: data.gallery_title,
+          gallery_subtitle: data.gallery_subtitle
         }
         return { page }
       } catch (error) {
@@ -83,6 +138,22 @@ export default {
 </script>
 
 <style>
+.item-gallery {
+  overflow: hidden;
+  border-radius: 4px;
+  width: 100%;
+  background: #F5F5F5;
+}
+.content-gallery {
+  padding: 20px;
+}
+.img-gallery {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  line-height: 0;
+  display: block;
+}
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -217,6 +288,123 @@ export default {
   
 @media (max-height: 500px) {
   #hero {
+    height: 120vh;
+  }
+}
+/* End Hero */
+#hero2 {
+  width: 100%;
+  height: auto;
+  min-height: 440px;
+  background: #101B40;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+  background-size: cover;
+  /* background-repeat: no-repeat; */
+  position: relative;
+}
+
+#hero2 .container {
+  position: relative;
+  padding-top: 132px;
+}
+
+@media (max-width: 992px) {
+  #hero2 .container {
+    padding-top: 58px;
+  }
+}
+
+#hero2 h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #F7F8FB;
+}
+
+#hero2 h1 span {
+  color: #FE7847;
+}
+
+#hero2 h2 {
+  color: #F7F8FB;
+  margin: 5px 0 30px 0;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+#hero2 .btn-get-started {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 28px;
+  border-radius: 4px;
+  transition: 0.5s;
+  color: #101B40;
+  background: #FFC4B2;
+}
+
+#hero2 .btn-get-started:hover {
+  background: #FE7847;
+}
+
+#hero2 .btn-watch-video {
+  font-size: 16px;
+  display: inline-block;
+  padding: 10px 25px 8px 40px;
+  transition: 0.5s;
+  margin-left: 25px;
+  color: #222222;
+  position: relative;
+  font-weight: 600;
+}
+
+#hero2 .btn-watch-video i {
+  color: #FE7847;
+  font-size: 32px;
+  position: absolute;
+  left: 0;
+  top: 7px;
+  transition: 0.3s;
+}
+
+#hero2 .btn-watch-video:hover {
+  color: #FE7847;
+}
+
+#hero2 .btn-watch-video:hover i {
+  color: #3b8af2;
+}
+  
+@media (min-width: 1024px) {
+  #hero2 {
+    background-attachment: fixed;
+  }
+}
+  
+@media (max-width: 768px) {
+  #hero2 {
+    height: 100vh;
+  }
+  #hero2 h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  #hero2 h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+  #hero2 .btn-get-started, #hero2 .btn-watch-video {
+    font-size: 13px;
+  }
+}
+  
+@media (max-height: 500px) {
+  #hero2 {
     height: 120vh;
   }
 }
