@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- <section id="hero" class="d-flex align-items-center" v-if="page.header_image !== false" :style="{ backgroundImage: `url(${page.header})` }"> -->
-    <section id="hero" class="d-flex align-items-center">
+    <section id="hero" class="d-flex align-items-center" v-if="page.header_image !== false" :style="{ backgroundImage: `url(${page.header})` }">
       <div class="container">
         <h1>{{ page.headline }}</h1>
         <h2>{{ page.subheadline }}</h2>
@@ -10,7 +9,7 @@
         </div>
       </div>
     </section>
-    <!-- <section id="hero2" class="d-flex align-items-center" v-else :style="{ backgroundImage: `url(${page.header})` }">
+    <section id="hero2" class="d-flex align-items-center" v-else :style="{ backgroundImage: `url(${page.header})` }">
       <div class="container">
         <h1>{{ page.headline }}</h1>
         <h2>{{ page.subheadline }}</h2>
@@ -18,7 +17,7 @@
           <a :href="page.headline_cta_url" class="btn-get-started scrollto">{{ page.headline_cta }}</a>
         </div>
       </div>
-    </section> -->
+    </section>
     <div v-html="page.description"></div>
     <section id="gallery" v-if="page.gallery_enable" class="section-bg-white">
       <div class="container">
@@ -50,12 +49,57 @@ import VueMasonryWall from "vue-masonry-wall"
 export default {
   data() {
     return {
+      page: {
+        id: null,
+        description: null,
+        title: null,
+        published_at: null,
+        created_at: null,
+        updated_at: null,
+        slug: null,
+        preventIndexing: null,
+        keywords: null,
+        header_image: false,
+        headline: null,
+        subheadline: null,
+        headline_cta: null,
+        headline_cta_url: null,
+        gallery_enable: false,
+        gallery_title: null,
+        gallery_subtitle: null,
+        seo: {
+          id: null,
+          metaTitle: null,
+          metaDescription: null,
+          alt: null
+        },
+        header: {
+          id: null,
+          name: null,
+          alternativeText: null,
+          caption: null,
+          width: null,
+          height: null,
+          formats: {},
+          hash: null,
+          ext: null,
+          mime: null,
+          size: null,
+          url: null,
+          previewUrl: null,
+          provider: null,
+          provider_metadata: null,
+          created_at: null,
+          updated_at: null,
+        },
+        gallery: []
+      },
       options: {
         width: 300,
         padding: {
           2: 8,
           default: 12
-        },
+        }
       }
     }
   },
@@ -64,14 +108,16 @@ export default {
     domain: function () {
       return domainApi
     }
-  },
-  async asyncData({ params, redirect }) {
-    if (typeof params.slug === 'undefined') {
+  },  
+  async fetch() {
+    var param = this.$route.fullPath
+    console.log(param)
+    if (param === '/') {
       try {
         const response = await axios.get(domainApi + '/pages/home-page')
         const data = response.data
         var gallery = []
-        const page = {
+        this.page = {
           id: data.id,
           description: data.description,
           title: response.data.title,
@@ -98,13 +144,12 @@ export default {
           gallery_title: data.gallery_title,
           gallery_subtitle: data.gallery_subtitle
         }
-        return { page }
       } catch (error) {
         console.log(error)
       }
     } else {
       try {
-        const response = await axios.get(domainApi + '/pages/' + params.slug)
+        const response = await axios.get(domainApi + '/pages' + param)
         const data = response.data
         var gallery = []
         for (let i = 0; i < data.gallery.length; i++) {
@@ -114,7 +159,7 @@ export default {
           }
           gallery.push(obj)
         }
-        const page = {
+        this.page = {
           id: data.id,
           description: data.description,
           title: response.data.title,
@@ -136,7 +181,6 @@ export default {
           gallery_title: data.gallery_title,
           gallery_subtitle: data.gallery_subtitle
         }
-        return { page }
       } catch (error) {
         console.log(error)
       }

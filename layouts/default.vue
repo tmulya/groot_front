@@ -29,24 +29,17 @@
                 <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about-us">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#team">Team</a></li>
-                <li class="drop-down"><a href="">Drop Down</a>
+                <!-- <li><a href="#services">Services</a></li> -->
+                <!-- <li><a href="#portfolio">Portfolio</a></li> -->
+                <!-- <li><a href="#team">Team</a></li> -->
+                <li class="drop-down"><a href="">Networks</a>
                     <ul>
-                    <li><a href="#">Drop Down 1</a></li>
-                    <li class="drop-down"><a href="#">Deep Drop Down</a>
-                        <ul>
-                        <li><a href="#">Deep Drop Down 1</a></li>
-                        <li><a href="#">Deep Drop Down 2</a></li>
-                        <li><a href="#">Deep Drop Down 3</a></li>
-                        <li><a href="#">Deep Drop Down 4</a></li>
-                        <li><a href="#">Deep Drop Down 5</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Drop Down 2</a></li>
-                    <li><a href="#">Drop Down 3</a></li>
-                    <li><a href="#">Drop Down 4</a></li>
+                        <li><a href="/groot-karya-persada">Groot Karya Persada</a></li>
+                        <li><a href="/groot-perkasa-sukses">Groot Perkasa Sukses</a></li>
+                        <li><a href="/yokkata-energi-sukses">Yokkata Energi Sukses</a></li>
+                        <li><a href="/graha-indonesia-sukses">Graha Indonesia Sukses</a></li>
+                        <li><a href="/mamuju-prima-makmur">Mamuju Prima Makmur</a></li>
+                        <li><a href="/global-suksesindo-mandiri">Global Suksesindo Mandiri</a></li>
                     </ul>
                 </li>
                 <li><a href="/contact">Contact</a></li>
